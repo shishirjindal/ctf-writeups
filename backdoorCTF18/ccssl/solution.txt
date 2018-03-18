@@ -1,0 +1,10 @@
+This challenge is inspired from openssl mitm CCS injection attack(CVE-2014-0224). When you connect to the service it shows some messages which are the ssl initial handshake messages. 
+
+[1] Client Hello with some cipher suites and client random.
+[2] Then server hello with selected cipher suite, certificate and server random.
+[3] After that in ssl client is expected to send the client key exchange message with encrypted pre_master_secret but instead it sends the ChangeCipherSpec message which meant all data after this message will be encrypted.
+[4] After this server sends the similar CCS message following the client.
+
+So what happened here is openssl accepted the CCS message even before the derivation of master secret which leads to assumption of NULL master secret. This was an implementation bug from openssl side.
+
+Now the session keys are generated from 3 values: Client Random, Server Random and the master secret. Here we have the client and the server random and master secret as null. We can easily derive the session keys and decrypt the following AES-256-CBC(mentioned in Server Hello Message) encrypted bash command results.

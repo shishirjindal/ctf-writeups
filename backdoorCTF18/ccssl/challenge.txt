@@ -1,0 +1,2 @@
+starlord, our crypto guy implemented his own version of ssl and he is damn sure that no one will be able to hack it. Try your luck.
+Hint: Read Early CCS Attack on SSL
