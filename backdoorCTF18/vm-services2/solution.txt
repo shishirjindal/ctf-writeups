@@ -1,0 +1,10 @@
+[1] After logging into VM you can try a lot of stuff there, but going by the name of challenge "vm-services2", the first instinct is to check the running services in the system. After a careful look at the services you will find out a service named keylogger. So there's a keylogger installed in the system.
+[2] After examining the keylogger service some things were clear:
+	Keylogger binary file location: /usr/local/bin/keylogger
+	Keylogger keystrokes file location: /var/spool/cron/.kde
+[3] After opening the keystrokes file we found out it was encrypted. So we need to look at the binary file for the encryption function.
+[4] After loading the file in IDA, there was an interesting function named encrypt.
+[5] It was a simple encrypted function with every byte being multiplied by itself and then a random number is added with modulus at the end.
+	ciphertext[i] = (plaintext[i]*plaintext[i] + rand())%256
+[6] Now this random function is actually very easy to guess because it was seeded with value 0.
+[7] Now we can easily brute our hash for every ciphertext character.

@@ -1,0 +1,4 @@
+This is a simple and straight forward challenge. You are asked to find the current password of this virtual machine.
+
+[1] Go to the boot menu by pressing F12 > Advanced Options for Ubuntu > Recovery Mode > root and press enter. You are now root user.
+[2] You can now see the contents of /etc/shadow. Use John(https://github.com/magnumripper/JohnTheRipper) to crack the shadow file password using rockyou dictionary.
